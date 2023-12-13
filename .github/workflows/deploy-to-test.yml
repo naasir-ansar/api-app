@@ -11,13 +11,16 @@ env:
   GKE_ZONE: us-central1
   DEPLOYMENT_NAME: api-app
   CONTAINER: api-app
-  TAG: 1.0.0
+  TAG: 1.0.1
 
 jobs:
   update-gke:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
+
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2.0.0
         with:
