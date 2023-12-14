@@ -53,18 +53,10 @@ app.get('/pr_open', async (req, res) => {
   }
 });
 
-app.get('/pr_done', async (req, res) => {
-  try {
-    const users = await PullRequestClosed.findAll(); // Fetch all users
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
 
 app.get('/release', async (req, res) => {
   try {
-    const users = await Release.findAll(); // Fetch all users
+    const users = await Release.findAll();
     res.json(users);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -73,7 +65,7 @@ app.get('/release', async (req, res) => {
 
 app.get('/pr_done', async (req, res) => {
   try {
-    const users = await PullRequestClosed.findAll(); // Fetch all users
+    const users = await PullRequestClosed.findAll(); 
     res.json(users);
   } catch (error) {
     res.status(500).json({ error: error.message });
