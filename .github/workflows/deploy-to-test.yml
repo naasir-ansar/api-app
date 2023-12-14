@@ -11,7 +11,7 @@ env:
   GKE_ZONE: us-central1
   DEPLOYMENT_NAME: api-app
   CONTAINER: api-app
-  TAG: 1.0.1
+  TAG: 2.0.0
 
 jobs:
   update-gke:

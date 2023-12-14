@@ -6,7 +6,7 @@ on:
       - main  # Replace with your branch
 
 env:
-  TAG: 1.0.1
+  TAG: 2.0.0
   IMAGE: api-app
 
 
