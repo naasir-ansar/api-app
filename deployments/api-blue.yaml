@@ -55,7 +55,7 @@ status: {}
 apiVersion: "autoscaling/v2"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "api-app-hpa-nfha"
+  name: "api-app-hpa-nfha-blue"
   namespace: "default"
   labels:
     app: "node-app"
