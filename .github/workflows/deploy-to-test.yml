@@ -11,11 +11,12 @@ env:
   GKE_ZONE: us-central1
   DEPLOYMENT_NAME: api-app
   CONTAINER: api-app
-  TAG: 2.0.0
+  TAG: 2.0.1
 
 jobs:
   update-gke:
     runs-on: ubuntu-latest
+    timeout-minutes: 3
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout code

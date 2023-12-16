@@ -12,6 +12,12 @@ app.get('/health', (req, res) => {
   res.status(200).send('API is running!');
 });
 
+// root endpoint
+app.get('/', (req, res) => {
+  res.status(200).send('DIQ api is running');
+});
+
+
 // Add more routes to fetch data from the database
 
 // Endpoint to get all items
