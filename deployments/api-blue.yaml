@@ -58,7 +58,7 @@ metadata:
   name: "api-app-hpa-nfha-blue"
   namespace: "default"
   labels:
-    app: "node-app"
+    app: "api-app"
 spec:
   scaleTargetRef:
     kind: "Deployment"
