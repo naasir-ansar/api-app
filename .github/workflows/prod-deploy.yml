@@ -1,32 +1,21 @@
-# This is a basic workflow that is manually triggered
 
 name: Blue - Green Deployment
 
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
   workflow_dispatch:
-    # Inputs the workflow accepts.
     inputs:
       color:
         description: 'Deployment type blue/green'
-        # Default value if no value is explicitly provided
         default: 'green'
-        # Input has to be provided for the workflow to run
         required: false
-        # The data type of the input
         type: choice
         options:
           - blue
           - green
       tag:
-        # Friendly description to be shown in the UI instead of 'name'
         description: 'Deploy Version'
-        # Default value if no value is explicitly provided
         default: '1.0.0'
-        # Input has to be provided for the workflow to run
         required: true
-        # The data type of the input
         type: string
 
 env:
@@ -36,10 +25,8 @@ env:
   CONTAINER: api-app
   REPO: us-central1-docker.pkg.dev/iit-cc/iit-cc 
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   deploy-to-production:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
@@ -48,7 +35,7 @@ jobs:
     steps:
 
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.1.1
         
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2.0.0
@@ -66,27 +53,18 @@ jobs:
         run: |
           # Determine which color to deploy based on input color
           if [ "${{ github.event.inputs.color }}" == blue ]; then
-            kubectl apply -f deployments/api-blue.yaml
+            kubectl apply -f deployments/api-version-blue.yaml
             # Enforce Application version
             kubectl set image deployment/api-app-blue $CONTAINER=$REPO/api-app:'${{ inputs.tag }}'
             kubectl rollout status deployment/api-app-blue
           elif [ "${{ github.event.inputs.color }}" == green ]; then
-            kubectl apply -f deployments/api-green.yaml
+            kubectl apply -f deployments/api-version-green.yaml
             # Enforce Application version
             kubectl set image deployment/api-app-green $CONTAINER=$REPO/api-app:'${{ inputs.tag }}'
             kubectl rollout status deployment/api-app-green
           else
             echo "Invalid color provided. Please provide 'blue' or 'green'."
             exit 1
-          fi
-
-      - name: Update Ingress for Traffic Switching
-        if: success()
-        run: |
-          if [ "${{ github.event.inputs.color }}" == blue ]; then
-            kubectl apply -f deployments/ingress-blue.yaml
-          else
-            kubectl apply -f deployments/ingress-green.yaml
           fi
           
     
