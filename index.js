@@ -14,7 +14,7 @@ app.get('/health', (req, res) => {
 
 // root endpoint
 app.get('/', (req, res) => {
-  res.status(200).send('DIQ api is running!! with blue green mode');
+  res.status(200).send('DIQ api is running!! with blue green mode on 4.0.1');
 });
 
 
