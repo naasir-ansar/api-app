@@ -16,3 +16,25 @@ spec:
   type: NodePort
 status:
   loadBalancer: {}
+---
+apiVersion: "autoscaling/v2"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "api-app-hpa-nfha"
+  namespace: "default"
+  labels:
+    app: "api-app"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "api-app-green"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      target:
+        type: "Utilization"
+        averageUtilization: 80
